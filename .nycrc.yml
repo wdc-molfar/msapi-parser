@@ -1,0 +1,13 @@
+# NYC config
+# https://github.com/istanbuljs/nyc#configuration-files
+
+extension:
+  - .js
+  - .ts
+
+report-dir: ./docs/.vuepress/public/coverage
+
+reporter:
+  - text
+  - lcov
+  - html

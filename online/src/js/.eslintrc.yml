@@ -1,0 +1,13 @@
+# ESLint config
+# http://eslint.org/docs/user-guide/configuring
+# https://jstools.dev/eslint-config/
+
+env:
+  jquery: true
+
+globals:
+  # Google Analytics
+  gtag: false
+
+  # ACE Editor
+  ace: false
