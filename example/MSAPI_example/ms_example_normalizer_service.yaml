@@ -1,0 +1,63 @@
+msapi: "1.0.1"
+
+metadata: 
+  
+    id: "http://localhost:8081/spec/ms_example_normalizer_service.yaml"
+  
+    title: "Normalizer Service type definition"
+  
+    description: >
+        Defines the type of normalizer service.
+        Normalizer consumes dirty multimedia messages, handles it, and creates 
+        normalized messages.
+    
+    repo: "@molfar/normalizer"
+            
+
+service:
+    
+    config:
+        
+        amqp:
+            $ref: "./ms_example_global_settings.yaml/#/components/Settings/amqp"    
+        
+        consume:
+            amqp:
+                $ref: "#/service/config/amqp"
+            queue:
+                exchange:
+                    name:
+                        schema:
+                            type: string
+        produce:
+            amqp:
+                $ref: "#/service/config/amqp"
+            exchange:
+                name:
+                    schema:
+                        type: string
+                        
+        health_check:
+            $ref: "./ms_example_global_settings.yaml/#/components/Settings/health"    
+                        
+                        
+    consumes:
+        - 
+            definition:
+                $ref: "./ms_example_defaults.yaml/#/components/Consumes/default"
+            
+            extendedBy:
+                -    
+                    $ref: "./ms_example_components_message_processing.yaml/#/components/Consumes/MEDIA_MESSAGES"
+                -
+                    $ref: "#/service/config/consume"
+    
+    produce:
+        definition:
+            $ref: "./ms_example_defaults.yaml/#/components/Produces/default"
+        extendedBy:
+            - 
+                $ref: "./ms_example_components_message_processing.yaml/#/components/Produces/MEDIA_MESSAGES"
+            - 
+                $ref: "#/service/config/produce"
+        

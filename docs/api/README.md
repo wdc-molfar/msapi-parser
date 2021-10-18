@@ -3,7 +3,7 @@
 ## Classes
 
 <dl>
-<dt><a href="#SwaggerParser">SwaggerParser</a> ⇐ <code>$RefParser</code></dt>
+<dt><a href="#MsapiParser">MsapiParser</a> ⇐ <code>$RefParser</code></dt>
 <dd></dd>
 <dt><a href="#ParserOptions">ParserOptions</a> ⇐ <code>$RefParserOptions</code></dt>
 <dd></dd>
@@ -12,6 +12,18 @@
 ## Members
 
 <dl>
+<dt><a href="#openapiV1">openapiV1</a></dt>
+<dd><p>JSON Schema for OpenAPI Specification v1.2</p>
+</dd>
+<dt><a href="#openapiV2">openapiV2</a></dt>
+<dd><p>JSON Schema for OpenAPI Specification v2.0</p>
+</dd>
+<dt><a href="#openapiV3">openapiV3</a></dt>
+<dd><p>JSON Schema for OpenAPI Specification v3.0</p>
+</dd>
+<dt><a href="#openapi">openapi</a></dt>
+<dd><p>JSON Schemas for every version of the OpenAPI Specification</p>
+</dd>
 <dt><a href="#swaggerParamRegExp">swaggerParamRegExp</a></dt>
 <dd><p>Regular Expression that matches Swagger path params.</p>
 </dd>
@@ -28,6 +40,12 @@
 ## Functions
 
 <dl>
+<dt><a href="#positionRangeForPath">positionRangeForPath(yaml, path)</a></dt>
+<dd><p>Get a position object with given</p>
+</dd>
+<dt><a href="#pathForPosition">pathForPosition(yaml, position)</a></dt>
+<dd><p>Get a JSON Path for position object in the spec</p>
+</dd>
 <dt><a href="#fixServers">fixServers(server, path)</a> ⇒ <code>object</code></dt>
 <dd><p>This function takes in a Server object, checks if it has relative path
 and then fixes it as per the path url</p>
@@ -87,34 +105,34 @@ This function crawls that tree and builds an error message string.</p>
 </dd>
 </dl>
 
-<a name="SwaggerParser"></a>
+<a name="MsapiParser"></a>
 
-## SwaggerParser ⇐ <code>$RefParser</code>
+## MsapiParser ⇐ <code>$RefParser</code>
 **Kind**: global class  
 **Extends**: <code>$RefParser</code>  
 
-* [SwaggerParser](#SwaggerParser) ⇐ <code>$RefParser</code>
-    * [new SwaggerParser()](#new_SwaggerParser_new)
+* [MsapiParser](#MsapiParser) ⇐ <code>$RefParser</code>
+    * [new MsapiParser()](#new_MsapiParser_new)
     * _instance_
-        * [.parse([path], [api], [options], [callback])](#SwaggerParser+parse) ⇒ <code>Promise</code>
-        * [.validate([path], [api], [options], [callback])](#SwaggerParser+validate) ⇒ <code>Promise</code>
+        * [.parse([path], [api], [options], [callback])](#MsapiParser+parse) ⇒ <code>Promise</code>
+        * [.validate([path], [api], [options], [callback])](#MsapiParser+validate) ⇒ <code>Promise</code>
     * _static_
-        * [.validate([path], [api], [options], [callback])](#SwaggerParser.validate) ⇒ <code>Promise</code>
+        * [.validate([path], [api], [options], [callback])](#MsapiParser.validate) ⇒ <code>Promise</code>
 
-<a name="new_SwaggerParser_new"></a>
+<a name="new_MsapiParser_new"></a>
 
-### new SwaggerParser()
+### new MsapiParser()
 This class parses a Swagger 2.0 or 3.0 API, resolves its JSON references and their resolved values,
 and provides methods for traversing, dereferencing, and validating the API.
 
-<a name="SwaggerParser+parse"></a>
+<a name="MsapiParser+parse"></a>
 
-### swaggerParser.parse([path], [api], [options], [callback]) ⇒ <code>Promise</code>
+### msapiParser.parse([path], [api], [options], [callback]) ⇒ <code>Promise</code>
 Parses the given Swagger API.
 This method does not resolve any JSON references.
 It just reads a single file in JSON or YAML format, and parse it as a JavaScript object.
 
-**Kind**: instance method of [<code>SwaggerParser</code>](#SwaggerParser)  
+**Kind**: instance method of [<code>MsapiParser</code>](#MsapiParser)  
 **Returns**: <code>Promise</code> - - The returned promise resolves with the parsed API object.  
 
 | Param | Type | Description |
@@ -124,13 +142,13 @@ It just reads a single file in JSON or YAML format, and parse it as a JavaScript
 | [options] | [<code>ParserOptions</code>](#ParserOptions) | Options that determine how the API is parsed |
 | [callback] | <code>function</code> | An error-first callback. The second parameter is the parsed API object. |
 
-<a name="SwaggerParser+validate"></a>
+<a name="MsapiParser+validate"></a>
 
-### swaggerParser.validate([path], [api], [options], [callback]) ⇒ <code>Promise</code>
+### msapiParser.validate([path], [api], [options], [callback]) ⇒ <code>Promise</code>
 Parses, dereferences, and validates the given Swagger API.
 Depending on the options, validation can include JSON Schema validation and/or Swagger Spec validation.
 
-**Kind**: instance method of [<code>SwaggerParser</code>](#SwaggerParser)  
+**Kind**: instance method of [<code>MsapiParser</code>](#MsapiParser)  
 **Returns**: <code>Promise</code> - - The returned promise resolves with the parsed API object.  
 
 | Param | Type | Description |
@@ -140,13 +158,13 @@ Depending on the options, validation can include JSON Schema validation and/or S
 | [options] | [<code>ParserOptions</code>](#ParserOptions) | Options that determine how the API is parsed, dereferenced, and validated |
 | [callback] | <code>function</code> | An error-first callback. The second parameter is the parsed API object. |
 
-<a name="SwaggerParser.validate"></a>
+<a name="MsapiParser.validate"></a>
 
-### SwaggerParser.validate([path], [api], [options], [callback]) ⇒ <code>Promise</code>
+### MsapiParser.validate([path], [api], [options], [callback]) ⇒ <code>Promise</code>
 Parses, dereferences, and validates the given Swagger API.
 Depending on the options, validation can include JSON Schema validation and/or Swagger Spec validation.
 
-**Kind**: static method of [<code>SwaggerParser</code>](#SwaggerParser)  
+**Kind**: static method of [<code>MsapiParser</code>](#MsapiParser)  
 **Returns**: <code>Promise</code> - - The returned promise resolves with the parsed API object.  
 
 | Param | Type | Description |
@@ -171,6 +189,30 @@ Options that determine how Swagger APIs are parsed, resolved, dereferenced, and 
 | --- | --- | --- |
 | [_options] | <code>object</code> \| [<code>ParserOptions</code>](#ParserOptions) | Overridden options |
 
+<a name="openapiV1"></a>
+
+## openapiV1
+JSON Schema for OpenAPI Specification v1.2
+
+**Kind**: global variable  
+<a name="openapiV2"></a>
+
+## openapiV2
+JSON Schema for OpenAPI Specification v2.0
+
+**Kind**: global variable  
+<a name="openapiV3"></a>
+
+## openapiV3
+JSON Schema for OpenAPI Specification v3.0
+
+**Kind**: global variable  
+<a name="openapi"></a>
+
+## openapi
+JSON Schemas for every version of the OpenAPI Specification
+
+**Kind**: global variable  
 <a name="swaggerParamRegExp"></a>
 
 ## swaggerParamRegExp
@@ -183,6 +225,58 @@ Regular Expression that matches Swagger path params.
 List of HTTP verbs used for OperationItem as per the Swagger specification
 
 **Kind**: global constant  
+<a name="positionRangeForPath"></a>
+
+## positionRangeForPath(yaml, path)
+Get a position object with given
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| yaml | <code>string</code> | YAML or JSON string |
+| path | <code>array</code> | an array of stings that constructs a JSON Path similar to JSON Pointers(RFC 6901). The difference is, each component of path is an item of the array instead of being separated with slash(/) in a string |
+
+<a name="pathForPosition"></a>
+
+## pathForPosition(yaml, position)
+Get a JSON Path for position object in the spec
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| yaml | <code>string</code> | YAML or JSON string |
+| position | <code>object</code> | position in the YAML or JSON string with `line` and `column` properties. `line` and `column` number are zero indexed |
+
+
+* [pathForPosition(yaml, position)](#pathForPosition)
+    * [~find(current)](#pathForPosition..find)
+        * [~isInRange(node)](#pathForPosition..find..isInRange) ⇒ <code>Boolean</code>
+
+<a name="pathForPosition..find"></a>
+
+### pathForPosition~find(current)
+recursive find function that finds the node matching the position
+
+**Kind**: inner method of [<code>pathForPosition</code>](#pathForPosition)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| current | <code>object</code> | AST object to serach into |
+
+<a name="pathForPosition..find..isInRange"></a>
+
+#### find~isInRange(node) ⇒ <code>Boolean</code>
+Determines if position is in node"s range
+
+**Kind**: inner method of [<code>find</code>](#pathForPosition..find)  
+**Returns**: <code>Boolean</code> - true if position is in node"s range  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| node | <code>object</code> | AST node |
+
 <a name="fixServers"></a>
 
 ## fixServers(server, path) ⇒ <code>object</code>

@@ -1,0 +1,92 @@
+msapi: "1.0.1"
+
+metadata: 
+  
+  id: "http://localhost:8081/spec/ms_example_components_message_processing.yaml"
+  
+  title: "Shared components for scrappers"
+  
+  description: >
+    Defines the components for task messages and for multimedia messages.
+    
+    Scrapers consume task messages, scrap sources, and create multimedia messages.
+    
+    Normalizer consumes dirty multimedia messages, handles it, and creates 
+    normalized messages.
+    
+    All parameters, exchange definitions and queue definitions will be set to 
+    default or overwritten by expanding in the parent spec.
+ 
+components:
+
+#########################################################################
+
+    Consumes:                          
+    
+        TASK_QUEUE:
+            queue:
+                message:
+                    schema:                 
+                        $ref: "#/components/Schemas/TASK_MESSAGE_SCHEMA"
+        
+        MEDIA_MESSAGES:
+            queue:
+                message:
+                    schema:                
+                        $ref: "#/components/Schemas/MEDIA_MESSAGE_SCHEMA"
+
+#########################################################################
+
+    Produces:                         
+    
+        MEDIA_MESSAGES:
+            message:
+                schema:                
+                    $ref: "#/components/Schemas/MEDIA_MESSAGE_SCHEMA"
+
+#########################################################################
+
+    Schemas:
+        
+        TASK_MESSAGE_SCHEMA:
+            type: object
+            required:
+                - id
+                - timestamp
+                - options
+            properties:
+                id: 
+                    type: string
+                timestamp: 
+                    type: string
+                options:
+                    type: object
+                
+        MEDIA_MESSAGE_SCHEMA:
+                type: object
+                required:
+                    - id
+                    - timestamp
+                    - scrapper_instance
+                    - data
+                properties:
+                    id: 
+                        type: string
+                    timestamp: 
+                        type: string
+                    scrapper_instance:
+                        type: string
+                    data:
+                        type: object
+                        required:
+                            - text
+                        properties:
+                            meta: 
+                                type: object
+                            text:
+                                type: string
+                                
+            
+        
+#########################################################################
+

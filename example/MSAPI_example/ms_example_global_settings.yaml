@@ -1,0 +1,30 @@
+msapi: "1.0.1"
+
+metadata: 
+  
+  id: "http://localhost:8081/spec/ms_example_global_settings.yaml"
+  
+  title: "Global settings"
+  
+  description: Default queue and exchange settings
+  
+ 
+components:
+
+#########################################################################
+
+    Settings:                          # available section
+        
+        amqp:
+            url: "amqps://xoilebqg:Nx46t4t9cxQ2M0rF2rIyZPS_xbAhmJIG@hornet.rmq.cloudamqp.com/xoilebqg"
+        
+
+        health:                       
+            amqp:
+                $ref: "#/components/Settings/amqp"
+            produce:
+                exchange:
+                    name: health_messages
+            time_interval: 30000        
+            
+#########################################################################

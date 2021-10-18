@@ -4,7 +4,7 @@
 set -e
 
 # build
-npm run coverage:node 
+#npm run coverage:node 
 npm run docs:api
 npx vuepress build docs
 

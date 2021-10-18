@@ -1,0 +1,91 @@
+msapi: "1.0.1"
+
+metadata: 
+  
+  id: "http://localhost:8081/spec/ms_example_components.yaml"
+  
+  title: "Shared components of MSAPI specificanion"
+  
+  description: >
+    An example of shared reusable components of MSAPI specificanion
+  
+ 
+components:
+
+#########################################################################
+
+    Exchanges:                          # available section
+    
+        EXCHANGE:                       # an example of exchange definition 
+            name: my_exchange           # optional name of exchange
+            type: fanout                # or "topic" or "direct"  - required type of exchange
+            options:                    # optional exchange options
+                durable: true           # (boolean): if true, the exchange will survive broker restarts. Defaults to true.
+                autoDelete: false       # (boolean): if true, the exchange will be destroyed once the number of bindings for which it is the source drop to zero. Defaults to false.
+
+#########################################################################
+
+    Queues:                          # available section
+    
+        QUEUE:                          # an example of queue definition
+            name: my_queue              # optional name of queue 
+            exchange: 
+                $ref: "#/components/Exchanges/EXCHANGE"
+            options:
+                exclusive: false        # if true, scopes the queue to the connection (defaults to false)
+                durable: true           # if true, the queue will survive broker restarts, modulo the effects of exclusive and autoDelete; this defaults to true if not supplied, unlike the others
+                autoDelete: false       # if true, the queue will be deleted when the number of consumers drops to zero (defaults to false)
+
+#########################################################################
+
+    Consumes:                          # available section
+    
+        CONSUME:
+            queue:
+                $ref: "#/components/Queues/QUEUE"
+            message:
+                options:
+                    noAck: false        # (boolean): if true, the broker won’t expect an acknowledgement of messages delivered to this consumer; i.e., it will dequeue messages as soon as they’ve been sent down the wire. Defaults to false (i.e., you will be expected to acknowledge messages).
+                    exclusive: false    # (boolean): if true, the broker won’t let anyone else consume from this queue; if there already is a consumer, there goes your channel (so usually only useful if you’ve made a ‘private’ queue by letting the server choose its name).
+                schema:                 # validation schema for message content
+                    type: object
+
+#########################################################################
+
+    Produces:                          # available section
+    
+        PRODUCE:
+            exchange:
+                $ref: "#/components/Exchanges/EXCHANGE"
+            message:
+                options:
+                    persistent: true    # (boolean): If truthy, the message will survive broker restarts provided it’s in a queue that also survives restarts.
+                schema:                 # validation schema for message content
+                    $ref: "#/components/Schemas/MESSAGE_CONTENT"
+
+#########################################################################
+
+    Messages:
+        
+        INPUT_MESSAGE:
+            options:
+                noAck: false        # (boolean): if true, the broker won’t expect an acknowledgement of messages delivered to this consumer; i.e., it will dequeue messages as soon as they’ve been sent down the wire. Defaults to false (i.e., you will be expected to acknowledge messages).
+                exclusive: false    # (boolean): if true, the broker won’t let anyone else consume from this queue; if there already is a consumer, there goes your channel (so usually only useful if you’ve made a ‘private’ queue by letting the server choose its name).
+            schema:                 # validation schema for message content
+                $ref: "#/components/Schemas/MESSAGE_CONTENT"    
+
+        OUTPUT_MESSAGE:
+            options:
+                persistent: true    # (boolean): If truthy, the message will survive broker restarts provided it’s in a queue that also survives restarts.
+            schema:                 # validation schema for message content
+                $ref: "#/components/Schemas/MESSAGE_CONTENT"
+
+#########################################################################
+    
+    Schemas:
+        
+        MESSAGE_CONTENT:
+            type: object
+
+#########################################################################
+

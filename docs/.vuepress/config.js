@@ -91,7 +91,7 @@ module.exports = {
     // editLinkText: 'Ви можете покращити цю сторінку'
 
   },
-  title: 'msapi-parser',
+  title: '@molfar/msapi-parser',
   description: 'msapi-parser module documentation',
   configureWebpack: {
     resolve: {
